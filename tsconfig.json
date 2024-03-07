@@ -4,7 +4,8 @@
     "strict": true,
     "baseUrl": ".", // This sets the base directory for non-relative module names
     "paths": {
-      "@/*": ["src/*"] // Adjusted to point to the src directory
+      "@/*": ["src/*"], // Adjusted to point to the src directory
+      "@assets/*": ["assets/*"]
     }
   },
   "include": [
