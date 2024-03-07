@@ -2,15 +2,14 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": ".", // This sets the base directory for non-relative module names
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["src/*"] // Adjusted to point to the src directory
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ]
