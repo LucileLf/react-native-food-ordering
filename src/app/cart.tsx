@@ -1,17 +1,20 @@
 import { Text, View } from '@/components/Themed';
 import { Platform, StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import { useContext } from 'react'
+import { useCart } from '@/providers/CartProvider'
 
 const CartScreen = () => {
+  const { items } = useCart()
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cart</Text>
+      <Text style={styles.title}>{items.length} items in cart.</Text>
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );
 }
 
-export default CartScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -29,3 +32,5 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+export default CartScreen;
