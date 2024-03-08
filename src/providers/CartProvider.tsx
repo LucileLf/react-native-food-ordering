@@ -15,9 +15,9 @@ const CartProvider = ({ children }: PropsWithChildren) => { //here children refe
   const [items, setItems] = useState<CartItem[]>([])
 
   const addItem = (product: Product, size: CartItem['size']) => {
-
+    // if already in cart, increment quantity
     const newCartItem: CartItem = {
-      id: '1',
+      id: '1', // generate
       product, // product: product
       product_id: product.id,
       size, // size: size
@@ -26,6 +26,7 @@ const CartProvider = ({ children }: PropsWithChildren) => { //here children refe
     setItems([newCartItem, ...items])
   }
 
+  //update quantity
 console.log(items);
 
 
