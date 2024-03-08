@@ -5,12 +5,34 @@ import Button from '@/components/Button'
 const CreateProductScreen = () => {
   const [ name, setName ] = useState('')
   const [ price, setPrice ] = useState('')
+  const [ errors, setErrors] = useState('')
 
-  const resetField = () => {
+  const resetFields = () => {
     setName('')
     setPrice('')
   }
+
+  const validateInput = () => {
+    if (!name) {
+      setErrors("Name is required");
+      return false;
+    }
+    if (!price) {
+      setErrors('Price is required');
+      return false;
+    }
+    if (isNaN(parseFloat(price))) {
+      setErrors('Price is not a number');
+      return false;
+    }
+    return true;
+  }
+
   const onCreate = () => {
+    if (!validateInput()) {
+      return;
+    }
+
     console.warn('creating product', name, price);
     //save in db
     resetFields()
@@ -23,6 +45,7 @@ const CreateProductScreen = () => {
       <Text style={styles.label}>Price</Text>
       <TextInput value={price} onChangeText={setPrice} placeholder='9.99' style={styles.input} keyboardType='numeric'/>
 
+      <Text style={{color: 'red' }}>{errors}</Text>
       <Button text='Create' onPress={onCreate}></Button>
     </View>
   )
