@@ -35,10 +35,12 @@ const CartProvider = ({ children }: PropsWithChildren) => { //here children refe
   //update quantity
   const updateQuantity =(itemId: string, amount: -1 | 1) => {
     console.log(itemId, amount);
-    const updatedItems = items.map(item =>
-      item.id !== itemId ? item : {...item, quantity: item.quantity + amount}
-      );
-    setItems(updatedItems)
+    setItems(
+      items.map(item =>
+        item.id !== itemId ? item : {...item, quantity: item.quantity + amount}
+        )
+        .filter((item => item.quantity > 0))
+    );
   };
 
 console.log(items);
