@@ -70,7 +70,10 @@ const CreateProductScreen = () => {
       <TextInput value={price} onChangeText={setPrice} placeholder='9.99' style={styles.input} keyboardType='numeric'/>
 
       <Text style={{color: 'red' }}>{errors}</Text>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6b006e301767bcf0640e8bc18aede503c1a5f6dc
       <Button text='Create' onPress={onCreate}></Button>
     </View>
   )
