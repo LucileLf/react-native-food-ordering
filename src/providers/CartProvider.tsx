@@ -20,6 +20,11 @@ const CartProvider = ({ children }: PropsWithChildren) => { //here children refe
 
   const addItem = (product: Product, size: CartItem['size']) => {
     // if already in cart, increment quantity
+    const existingItem = items.find((item) => item.product === product && item.size === size);
+    if (existingItem) {
+      updateQuantity(existingItem.id, 1);
+      return;
+    }
     const newCartItem: CartItem = {
       id : randomUUID(),
       product, // product: product
