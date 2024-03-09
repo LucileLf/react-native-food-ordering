@@ -4,13 +4,16 @@ import Button from '@/components/Button'
 import * as ImagePicker from 'expo-image-picker';
 import { defaultPizzaImage } from '@/components/ProductListItem';
 import Colors from '@/constants/Colors';
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 
 const CreateProductScreen = () => {
   const [ name, setName ] = useState('')
   const [ price, setPrice ] = useState('')
   const [ errors, setErrors] = useState('')
   const [image, setImage] = useState<string | null>(null);
+
+  const { id } = useLocalSearchParams();
+  const isUpdating = !!id; // true if id is defined
 
   const resetField = () => {
     setName('');
@@ -34,11 +37,28 @@ const CreateProductScreen = () => {
     return true;
   }
 
+  const onSubmit = () =>  {
+    if (isUpdating) {
+      onUpdate()
+    } else {
+      onCreate()
+    }
+  }
+
   const onCreate = () => {
     if (!validateInput()) {
       return;
     }
     console.warn('creating product', name, price);
+    //save in db
+    resetField();
+  }
+
+  const onUpdate = () => {
+    if (!validateInput()) {
+      return;
+    }
+    console.warn('updating product', name, price);
     //save in db
     resetField();
   }
@@ -61,7 +81,7 @@ const CreateProductScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{title: 'Create product'}}/>
+      <Stack.Screen options={{title: isUpdating ? 'Update product' : 'Create product'}}/>
       <Image source={{ uri: image || defaultPizzaImage }} style={styles.image}/>
       <Text onPress={pickImage} style={styles.textButton}>Select Image</Text>
 
@@ -72,7 +92,7 @@ const CreateProductScreen = () => {
       <TextInput value={price} onChangeText={setPrice} placeholder='9.99' style={styles.input} keyboardType='numeric'/>
 
       <Text style={{color: 'red' }}>{errors}</Text>
-      <Button text='Create' onPress={onCreate}></Button>
+      <Button text={isUpdating ? 'Update' : 'Create'} onPress={onSubmit}></Button>
     </View>
   )
 }
