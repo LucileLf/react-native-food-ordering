@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput ,Image } from 'react-native'
+import { View, Text, StyleSheet, TextInput ,Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Button from '@/components/Button'
 import * as ImagePicker from 'expo-image-picker';
@@ -79,6 +79,30 @@ const CreateProductScreen = () => {
     }
   };
 
+  const onDelete= () => {
+    console.warn('DELETE!');
+
+  }
+
+  const confirmDelete = () => {
+    //console.warn('entered function confirmDelete');
+    Alert.alert('Confirm',  'Are you sure you want to delete this product?');
+  }
+
+    // , [
+    //   {
+    //   text: 'Cancel'
+    //   },
+    //   {
+    //     text: 'Delete',
+    //     style: 'destructive',
+    //     onPress: 'onDelete',
+    //   },
+    //   {
+    //     text: 'Cancel'
+    //   }
+    // ]}
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{title: isUpdating ? 'Update product' : 'Create product'}}/>
@@ -93,6 +117,7 @@ const CreateProductScreen = () => {
 
       <Text style={{color: 'red' }}>{errors}</Text>
       <Button text={isUpdating ? 'Update' : 'Create'} onPress={onSubmit}></Button>
+      { isUpdating && <Text onPress={confirmDelete} style={styles.textButton} >Delete</Text>}
     </View>
   )
 }
