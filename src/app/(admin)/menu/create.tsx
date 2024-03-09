@@ -86,22 +86,20 @@ const CreateProductScreen = () => {
 
   const confirmDelete = () => {
     //console.warn('entered function confirmDelete');
-    Alert.alert('Confirm',  'Are you sure you want to delete this product?');
+    Alert.alert('Confirm',  'Are you sure you want to delete this product?', [
+      {
+      text: 'Cancel'
+      },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: 'onDelete',
+      },
+      {
+        text: 'Cancel'
+      }
+    ]) 
   }
-
-    // , [
-    //   {
-    //   text: 'Cancel'
-    //   },
-    //   {
-    //     text: 'Delete',
-    //     style: 'destructive',
-    //     onPress: 'onDelete',
-    //   },
-    //   {
-    //     text: 'Cancel'
-    //   }
-    // ]}
 
   return (
     <View style={styles.container}>

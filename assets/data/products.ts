@@ -1,10 +1,12 @@
 const products = [
+
+
   {
-    id: 1,
-    name: 'Ultimate Pepperoni',
+    id: 4,
+    name: 'Margarita',
     image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png',
-    price: 12.99,
+      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/margarita.png',
+    price: 9.9,
   },
   {
     id: 2,
@@ -20,13 +22,16 @@ const products = [
       'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png',
     price: 13.47,
   },
+
   {
-    id: 4,
-    name: 'Margarita',
+    id: 1,
+    name: 'Ultimate Pepperoni',
     image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/margarita.png',
-    price: 9.9,
+      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png',
+    price: 12.99,
   },
+
+
   {
     id: 5,
     name: 'Pacific Veggie',
