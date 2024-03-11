@@ -8,7 +8,7 @@ import { supabase } from '@/lib/supabase';
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
     setLoading(true);
@@ -41,7 +41,7 @@ const SignInScreen = () => {
         secureTextEntry
       />
 
-      <Button onPress={signInWithEmail} disabled={isLoading} text={isLoading ? "Signing in..." : "Sign in"} />
+      <Button onPress={signInWithEmail} disabled={loading} text={loading ? "Signing in..." : "Sign in"} />
       <Link href="/sign-up" style={styles.textButton}>
         Create an account
       </Link>
