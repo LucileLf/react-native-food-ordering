@@ -11,7 +11,7 @@ const ExpoSecureStoreAdapter = {
   },
   removeItem: (key: string) => {
     SecureStore.deleteItemAsync(key);
-  },
+   },
 };
 
 const supabaseUrl = 'https://udrovrjuqsfbbakokiyb.supabase.co';
