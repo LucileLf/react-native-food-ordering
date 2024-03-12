@@ -20,6 +20,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const {session} = useAuth();
 
+  // admin guard
   if (!session) {
     return <Redirect href='/'/>
   }
