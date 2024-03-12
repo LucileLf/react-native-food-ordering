@@ -52,7 +52,7 @@ import { PropsWithChildren, createContext, useContext, useEffect, useState } fro
     });
   }, [])
 
-  console.log('profile', profile);
+  // console.log('profile', profile);
 
   // QUERY SESSION
   return <AuthContext.Provider value={{session, loading, profile, isAdmin: profile?.group === 'ADMIN'}}>{children}</AuthContext.Provider>
