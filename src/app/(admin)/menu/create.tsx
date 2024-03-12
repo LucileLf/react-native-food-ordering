@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { defaultPizzaImage } from '@/components/ProductListItem';
 import Colors from '@/constants/Colors';
 import { Stack, router, useLocalSearchParams, useRouter } from 'expo-router';
-import { useInsertProduct, useProduct, useUpdateProduct } from '@/api/products';
+import { useDeleteProduct, useInsertProduct, useProduct, useUpdateProduct } from '@/api/products';
 
 const CreateProductScreen = () => {
   const [ name, setName ] = useState('')
@@ -21,6 +21,7 @@ const CreateProductScreen = () => {
   const {mutate: insertProduct} = useInsertProduct(); // hook returns a function
   const {mutate: updateProduct} = useUpdateProduct(); // hook returns a function
   const {data: productToUpdate} = useProduct(id)
+  const {mutate: deleteProduct} = useDeleteProduct(); // hook returns a function
 
   const router = useRouter();
 
@@ -32,7 +33,7 @@ const CreateProductScreen = () => {
     }
   }, [productToUpdate])
 
-  const resetField = () => {
+  const resetFields = () => {
     setName('');
     setPrice('');
   }
@@ -70,7 +71,7 @@ const CreateProductScreen = () => {
     console.warn('creating product')
     insertProduct({name, price: parseFloat(price), image}, {
       onSuccess: () => {
-        resetField();
+        resetFields();
         router.back()
       }
     })
@@ -84,7 +85,7 @@ const CreateProductScreen = () => {
     console.warn('updating product', name, price);
     updateProduct({id, name, price: parseFloat(price), image}, {
       onSuccess: () => {
-        resetField();
+        resetFields();
         router.back()
       }
     })
@@ -107,7 +108,15 @@ const CreateProductScreen = () => {
   };
 
   const onDelete= () => {
-    console.warn('DELETE!');
+    // console.warn('DELETE!');
+    // delete from db
+    deleteProduct(id, {
+      onSuccess:() =>  {
+        Alert.alert('', `${name} deleted!`);
+        resetFields();
+        router.replace('/(admin)')
+      }
+    })
 
   }
 
