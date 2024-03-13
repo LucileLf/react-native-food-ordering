@@ -16,19 +16,23 @@ export const useProductList = () =>  {
   })
 }
 
-export const useProduct = (id: number) =>  {
+export const useProduct = (id: number) => {
   return useQuery({
-    queryKey: ['products', 'id'],
+    queryKey: ['products', id],
     queryFn: async () => {
-      const { data, error } = await supabase.from('products').select('*').eq('id', id).single();
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', id)
+        .single();
+
       if (error) {
-        throw new Error(error.message)
+        throw new Error(error.message);
       }
       return data;
-    }
-  })
-}
-
+    },
+  });
+};
 // CREATE
 
 export const useInsertProduct = () =>  {
@@ -49,11 +53,8 @@ export const useInsertProduct = () =>  {
     },
     //invalidate the query cache for the 'products' key --> query get executed again
     async onSuccess() {
-      await queryClient.invalidateQueries(['products']);
+      await queryClient.invalidateQueries({queryKey: ['products']});
     },
-    //  onError(error) {
-
-    // }
   })
 }
 
@@ -79,8 +80,8 @@ export const useUpdateProduct = () =>  {
     },
     //invalidate the query cache for the 'products' key --> query get executed again
     async onSuccess(_, data) {
-      await queryClient.invalidateQueries(['products']);
-      await queryClient.invalidateQueries(['products', data.id]);
+      await queryClient.invalidateQueries({queryKey:['products']});
+      await queryClient.invalidateQueries({queryKey:['products', data.id]});
     },
     //  onError(error) {
 
@@ -100,7 +101,7 @@ export const useDeleteProduct = () =>  {
       }
     },
     async onSuccess() {
-      await queryClient.invalidateQueries(['products']);
+      await queryClient.invalidateQueries({queryKey:['products']});
     },
   })
 }
