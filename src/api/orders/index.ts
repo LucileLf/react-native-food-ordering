@@ -1,10 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/providers/AuthProvider'
-// READ
+
 
 export const useAdminOrderList = ({ archived = false }) =>  {
   const statuses = archived ? ['Delivered'] : ['New', 'Cooking', 'Delivering']
+
+  // READ
 
   return useQuery({
     queryKey: ['orders', { archived }],
@@ -35,6 +37,24 @@ export const useMyOrderList = () =>  {
     }
   })
 }
+
+export const useOrderDetails = (id: number) => {
+  return useQuery({
+    queryKey: ['orders', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    },
+  });
+};
 
 // export const useOrder = (id: number) => {
 //   return useQuery({
