@@ -1,20 +1,20 @@
 import Colors from '@/constants/Colors';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import { Product } from '@/types'
+import { Tables } from '@/types'
 import { Link, useSegments } from 'expo-router';
 
 export const defaultPizzaImage = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png'
 
 type ProductListItemProps = {
-  product: Product;
+  product: Tables<'products'>; // get types from supabase
 }
 
 export const ProductListItem = ({ product }: ProductListItemProps) => {
   const segments = useSegments()
-  
+  const href = segments[0] ? `/${segments[0]}/menu/${product.id}` : '';
 
   return (
-    <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
+    <Link href={href} asChild>
       <Pressable style={styles.container}>
         <Image
           source={{ uri: product.image || defaultPizzaImage}}
