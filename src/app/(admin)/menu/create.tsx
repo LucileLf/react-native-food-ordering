@@ -68,7 +68,7 @@ const CreateProductScreen = () => {
       return;
     }
     // save in db
-    console.warn('creating product')
+    // console.warn('creating product')
     insertProduct({name, price: parseFloat(price), image}, {
       onSuccess: () => {
         resetFields();

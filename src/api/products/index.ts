@@ -33,6 +33,7 @@ export const useProduct = (id: number) => {
     },
   });
 };
+
 // CREATE
 
 export const useInsertProduct = () =>  {
