@@ -74,6 +74,7 @@ const CreateProductScreen = () => {
 
     // upload image to storage
     const imagePath = await uploadImage()
+    console.log(imagePath);
 
     // save in db
     insertProduct({name, price: parseFloat(price), image: imagePath}, {
@@ -157,7 +158,7 @@ const CreateProductScreen = () => {
     const { data, error } = await supabase.storage
       .from('product-images') // bucket
       .upload(filePath, decode(base64), { contentType });
-
+    console.log('uploadImage error', error);
     if (data) {
       return data.path;
     }
