@@ -6,6 +6,10 @@ import { defaultPizzaImage } from '@/components/ProductListItem';
 import Colors from '@/constants/Colors';
 import { Stack, router, useLocalSearchParams, useRouter } from 'expo-router';
 import { useDeleteProduct, useInsertProduct, useProduct, useUpdateProduct } from '@/api/products';
+import * as FileSystem from 'expo-file-system'
+import { randomUUID } from 'expo-crypto';
+import { supabase } from '@/lib/supabase';
+import { decode } from 'base64-arraybuffer'
 
 const CreateProductScreen = () => {
   const [ name, setName ] = useState('')
@@ -63,13 +67,16 @@ const CreateProductScreen = () => {
     }
   }
 
-  const onCreate = () => {
+  const onCreate = async () => {
     if (!validateInput()) {
       return;
     }
+
+    // upload image to storage
+    const imagePath = await uploadImage()
+
     // save in db
-    // console.warn('creating product')
-    insertProduct({name, price: parseFloat(price), image}, {
+    insertProduct({name, price: parseFloat(price), image: imagePath}, {
       onSuccess: () => {
         resetFields();
         router.back()
@@ -136,6 +143,25 @@ const CreateProductScreen = () => {
       }
     ])
   }
+
+  const uploadImage = async () => {
+    if (!image?.startsWith('file://')) {
+      return;
+    }
+
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: 'base64',
+    });
+    const filePath = `${randomUUID()}.png`;
+    const contentType = 'image/png';
+    const { data, error } = await supabase.storage
+      .from('product-images') // bucket
+      .upload(filePath, decode(base64), { contentType });
+
+    if (data) {
+      return data.path;
+    }
+  };
 
   return (
     <View style={styles.container}>
