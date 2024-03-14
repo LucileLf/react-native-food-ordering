@@ -79,7 +79,7 @@ export const useInsertOrder = () =>  {
     },
     //invalidate the query cache for the 'products' key --> query get executed again
     async onSuccess() {
-      await queryClient.invalidateQueries({queryKey: ['products']});
+      await queryClient.invalidateQueries({queryKey: ['orders']});
     },
   })
 }
