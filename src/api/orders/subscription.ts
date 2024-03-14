@@ -12,7 +12,7 @@ export const useInsertOrderSubscription = () => {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'orders' },
         (payload) => {
-          console.log('Change received!', payload)
+          // console.log('Change received!', payload)
           // invalidate query to trigger refresh
           queryClient.invalidateQueries({queryKey:['orders']}); // all queries starting with orders
         }
@@ -23,5 +23,32 @@ export const useInsertOrderSubscription = () => {
       // unsubscribe
       ordersSubscription.unsubscribe();
     }
+  }, [])
+}
+
+
+export const useUpdateOrderSubscription = (id: number) => {
+  const queryClient = useQueryClient()
+
+  useEffect(()=> {
+    const orderUpdatesSubscription = supabase.channel('custom-filter-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'orders',
+          filter: `id=eq.${id}`
+        },
+        (payload) => {
+          console.log('Change received!', payload)
+          queryClient.invalidateQueries({queryKey:['orders', id]});
+        }
+      )
+      .subscribe()
+        return () => { // returning a function from useEffect -> called when unmounting the component
+        // unsubscribe
+        orderUpdatesSubscription.unsubscribe();
+      }
   }, [])
 }

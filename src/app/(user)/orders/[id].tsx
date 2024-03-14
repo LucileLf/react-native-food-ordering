@@ -3,12 +3,16 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import OrderItemListItem from '../../../components/OrderItemListItem';
 import OrderListItem from '../../../components/OrderListItem';
 import { useOrderDetails } from '@/api/orders/index';
+import { useUpdateOrderSubscription } from '@/api/orders/subscription'
 
 const OrderDetailScreen = () => {
   const {id: idAsString} = useLocalSearchParams();
   const id = parseFloat(typeof idAsString === 'string' ? idAsString : idAsString[0]) // ! idAsString can be an array of strings
 
   const { data: order, isLoading, error } = useOrderDetails(id)
+
+  // subscribe to order updates
+  useUpdateOrderSubscription(id);
 
   if (isLoading) {
     return <ActivityIndicator />
@@ -25,8 +29,6 @@ const OrderDetailScreen = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: `Order #${id}` }} />
-
-      <OrderListItem order={order} />
 
       <FlatList
         data={order.order_items}

@@ -6,6 +6,7 @@ import OrderListItem from '../../../components/OrderListItem';
 import { OrderStatusList } from '@/types';
 import Colors from '@/constants/Colors';
 import { useOrderDetails, useUpdateOrder } from '@/api/orders'
+import { useUpdateOrderSubscription } from '@/api/orders/subscription'
 
 const OrderDetailScreen = () => {
   const {id: idAsString} = useLocalSearchParams();
@@ -26,6 +27,7 @@ const OrderDetailScreen = () => {
     return <Text>Order not found</Text>
   }
 
+  // useUpdateOrderSubscription(id);
 
   // console.log("hello order items", order.order_items);
   return (

@@ -3,7 +3,7 @@ import OrderListItem from '@/components/OrderListItem'
 // import orders from '@assets/data/orders'
 import { ActivityIndicator, FlatList, Text } from 'react-native'
 import { useAdminOrderList } from '@/api/orders'
-import { useInsertOrderSubscription } from '@/api/orders/subscription'
+import { useInsertOrderSubscription, useUpdateOrderSubscription } from '@/api/orders/subscription'
 
 
 const OrdersScreen = () => {
@@ -12,7 +12,6 @@ const OrdersScreen = () => {
 
   // subscribe to new orders
   useInsertOrderSubscription();
-
 
   // console.log(orders);
   if (isLoading) {
