@@ -27,7 +27,7 @@ const OrderDetailScreen = () => {
   }
 
 
-  console.log("hello order items", order.order_items);
+  // console.log("hello order items", order.order_items);
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: `Order #${id}` }} />

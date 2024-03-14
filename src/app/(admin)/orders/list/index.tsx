@@ -1,12 +1,19 @@
-import React from 'react'
+import { useEffect } from 'react'
 import OrderListItem from '@/components/OrderListItem'
 // import orders from '@assets/data/orders'
 import { ActivityIndicator, FlatList, Text } from 'react-native'
 import { useAdminOrderList } from '@/api/orders'
+import { useInsertOrderSubscription } from '@/api/orders/subscription'
+
 
 const OrdersScreen = () => {
   // fetching only active orders
   const {data: orders, isLoading, error} = useAdminOrderList({archived: false})
+
+  // subscribe to new orders
+  useInsertOrderSubscription();
+
+
   // console.log(orders);
   if (isLoading) {
     return <ActivityIndicator/>;
