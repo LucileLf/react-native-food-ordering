@@ -17,12 +17,8 @@ const OrderDetailScreen = () => {
     return <ActivityIndicator />
   }
 
-  if (error) {
-    return <Text>Product not found</Text>
-  }
-
-  if (!order) {
-    return;
+  if (error || !order) {
+    return <Text>Order not found</Text>
   }
 
 
