@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/providers/AuthProvider'
-import { InsertTables } from '@/types';
+import { InsertTables, UpdateTables } from '@/types';
 
 
 export const useAdminOrderList = ({ archived = false }) =>  {
@@ -92,37 +92,42 @@ export const useInsertOrder = () =>  {
   })
 }
 
+// UPDATE
 
-// // UPDATE
+export const useUpdateOrder = () =>  {
+  const queryClient = useQueryClient();
 
-// export const useUpdateOrder = () =>  {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     async mutationFn(data: any) {
-//       const { error, data: updatedProduct } = await supabase.from('products').update({
-//         name: data.name,
-//         image: data.image,
-//         price: data.price
-//       })
-//       .eq('id', data.id)
-//       .select()
-//       .single()
+  return useMutation({
+    async mutationFn({
+      id,
+      updatedFields,
+    }: {
+      id: number,
+      updatedFields: UpdateTables<'orders'>;
+    }) {
+      const { error, data: updatedOrder } = await supabase
+        .from('orders')
+        .update(updatedFields)
+        .eq('id', id)
+        .select()
+        .single()
 
-//       if (error) {
-//         throw new Error(error.message);
-//       }
-//       return updatedProduct;
-//     },
-//     //invalidate the query cache for the 'products' key --> query get executed again
-//     async onSuccess(_, data) {
-//       await queryClient.invalidateQueries({queryKey:['products']});
-//       await queryClient.invalidateQueries({queryKey:['products', data.id]});
-//     },
-//     //  onError(error) {
+      if (error) {
+        throw new Error(error.message);
+      }
+      return updatedOrder;
+    },
+    //invalidate the query cache for the 'products' key --> query get executed again
+    async onSuccess(_, {id}) {
+      await queryClient.invalidateQueries({queryKey:['orders']});
+      await queryClient.invalidateQueries({queryKey:['orders', id]});
+    },
+    //  onError(error) {
 
-//     // }
-//   })
-// }
+    // }
+  })
+}
+
 
 // // DELETE
 
