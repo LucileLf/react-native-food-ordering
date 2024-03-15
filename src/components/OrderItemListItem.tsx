@@ -12,12 +12,6 @@ type OrderItemListItemProps = {
 const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
   return (
     <View style={styles.container}>
-      {/* <Image
-        source={{ uri: item.products.image || defaultPizzaImage }}
-        style={styles.image}
-        resizeMode="contain"
-      /> */}
-
       <RemoteImage
         path={item.products.image}
         fallback={defaultPizzaImage}

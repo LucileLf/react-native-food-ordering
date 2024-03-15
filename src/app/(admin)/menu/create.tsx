@@ -74,7 +74,7 @@ const CreateProductScreen = () => {
 
     // upload image to storage
     const imagePath = await uploadImage()
-    console.log(imagePath);
+    // console.log(imagePath);
 
     // save in db
     insertProduct({name, price: parseFloat(price), image: imagePath}, {
@@ -85,13 +85,16 @@ const CreateProductScreen = () => {
     })
   }
 
-  const onUpdate = () => {
+  const onUpdate = async () => {
     if (!validateInput()) {
       return;
     }
+
+    const imagePath = await uploadImage()
+
     // save in db
-    console.warn('updating product', name, price);
-    updateProduct({id, name, price: parseFloat(price), image}, {
+    // console.warn('updating product', name, price);
+    updateProduct({id, name, price: parseFloat(price), image: imagePath}, {
       onSuccess: () => {
         resetFields();
         router.back()
@@ -158,7 +161,6 @@ const CreateProductScreen = () => {
     const { data, error } = await supabase.storage
       .from('product-images') // bucket
       .upload(filePath, decode(base64), { contentType });
-    console.log('uploadImage error', error);
     if (data) {
       return data.path;
     }
