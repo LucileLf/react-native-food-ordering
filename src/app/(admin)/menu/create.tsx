@@ -156,6 +156,7 @@ const CreateProductScreen = () => {
     const base64 = await FileSystem.readAsStringAsync(image, {
       encoding: 'base64',
     });
+    
     const filePath = `${randomUUID()}.png`;
     const contentType = 'image/png';
     const { data, error } = await supabase.storage
@@ -169,6 +170,7 @@ const CreateProductScreen = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{title: isUpdating ? 'Update product' : 'Create product'}}/>
+
       <Image source={{ uri: image || defaultPizzaImage }} style={styles.image}/>
       <Text onPress={pickImage} style={styles.textButton}>Select Image</Text>
 

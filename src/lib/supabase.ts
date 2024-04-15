@@ -15,14 +15,18 @@ const ExpoSecureStoreAdapter = {
    },
 };
 
-const supabaseUrl = 'https://udrovrjuqsfbbakokiyb.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkcm92cmp1cXNmYmJha29raXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAwMjczNDUsImV4cCI6MjAyNTYwMzM0NX0.pYheRvhSvA-mfOP9JZE-8oCN2ZZFTshF-eJ2FmDqQv4';
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON || "";
+
+// const supabaseUrl = 'http://127.0.0.1:54323'
+// const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    storage: ExpoSecureStoreAdapter as any,
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false,
-  },
+  // auth: {
+  //   storage: ExpoSecureStoreAdapter as any,
+  //   autoRefreshToken: true,
+  //   persistSession: true,
+  //   detectSessionInUrl: false,
+  // },
 });
