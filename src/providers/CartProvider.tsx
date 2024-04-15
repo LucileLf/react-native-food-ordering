@@ -4,6 +4,7 @@ import { randomUUID } from 'expo-crypto'
 import { useInsertOrder } from '@/api/orders'
 import { useInsertOrderItem } from '@/api/order-items'
 import { useRouter } from "expo-router";
+import { initializePaymentSheet } from "@/lib/stripe";
 
 type Product = Tables<'products'> // get type from supabase
 
@@ -68,7 +69,8 @@ const CartProvider = ({ children }: PropsWithChildren) => { //here children refe
     setItems([]);
   }
 
-  const checkout = () => {
+  const checkout = async () => {
+    await initializePaymentSheet(Math.floor(total * 100)); //convert to cents
     // create new order
     insertOrder({ total }, {
       onSuccess: saveOrderItems,
